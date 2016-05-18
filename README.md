@@ -1,2 +1,2 @@
 # indicoExtension
-An chrome Extension which make use of indico API to analysis the selected text
+An chrome Extension which make use of indico API to analyze the selected text
