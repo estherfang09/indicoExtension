@@ -3,36 +3,31 @@
  This page is shown when the extension button is clicked, because the
  "browser_action" field in manifest.json contains the "default_popup" key with
  value "popup.html".
- -->
+-->
 <html>
-  <head>
-    <title>Indico</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-    </style>
-
+<head>
+  <title>Indico</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
+    -->
+
     <script src="jquery.js"></script>
     <script src="popup.js"></script>
-    <script src="background.js"></script>
-  </head>  <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
+  </head> 
+  <body>
+    <div id="graph" class="chart"  data-percent="88"></div>
+    <table id= "result" style="display: none">
+    <tr id="title" ><td> </td><td>Text Analysis</td> </tr>
+    <tr id= "language"> <td>Language:</td> </tr>
+    <tr id= "keywords"><td> Keywords: </td>  </tr>
+    <tr id= "texttags"> <td> Text tags: </td> </tr>
+    <tr id="sentiment"> <td>Sentiment: </td></tr>
+    <tr id="personality"> <td>Personality: </td></tr>
+  </table>
   </body>
-</html>
+  </html>
 

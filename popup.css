@@ -1,0 +1,41 @@
+body {
+	position: relative;
+	width: 500px;
+	height: 300px;
+	min-width: 350px;
+    min-height: 200px;
+    background-image: url('Notebook-Background.jpg');
+    font-family: "Georgia","Segoe UI", "Lucida Grande",Tahoma, sans-serif;
+    font-size: 100%;
+    margin-left: 30px;
+    
+};
+#result {
+	 display: none;
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+
+
+div {
+    position:relative;
+    margin:80px;
+    width:450px; height:200px;
+}
+canvas {
+    display: block;
+    position:absolute;
+    top:0;
+    left:0;
+}
+span {
+    color:#555;
+    display:block;
+    line-height:200px;
+    text-align:center;
+    width:200px;
+    font-family:sans-serif;
+    font-size:40px;
+    font-weight:100;
+    margin-left:5px;
+}
