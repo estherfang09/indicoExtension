@@ -2,6 +2,7 @@ $(function(tab){
   chrome.tabs.getSelected(null, function(tab) {
 
     chrome.tabs.sendMessage(tab.id, {method: "getSelection"}, function(response){
+     toneAnalysis(response.data);
      sendServiceRequest(response.data);
    });
   })
@@ -70,6 +71,32 @@ function sendServiceRequest(info){
   });
 }
 
+function toneAnalysis(info){
+  $.ajax({
+    url:'http://localhost:3000/tone',
+    type: 'POST',
+    tryCount: 0,
+    retryLimit: 30,
+
+    data:info,
+    success: function(res){
+      console.log("testing watsonapi" + info);
+    },
+    error: function(xhr, status, errorThrown){
+      console.log(status);
+      if (status == 'timeout'){
+        this.tryCount++;
+        if (this.tryCount <= this.retryLimit){
+          $.ajax(this);
+          return;
+        }
+      } else {
+        console.log(status);
+      }
+    }     
+  });
+}
+
 /* The callback function for the ajax request */
 function processData(data){
   extractSentiment(data);
@@ -86,7 +113,6 @@ function processData(data){
 function extractLang(article){
   var res = JSON.parse(article)["results"];
   var keywords = res["language"]["results"][0];
-  console.log(keywords);
   var sortable = [];
   for (var keyword in keywords){
     sortable.push([keyword, keywords[keyword]])
@@ -99,7 +125,6 @@ function extractLang(article){
 
 /* Function to extract sentiment from indico API*/
 function extractSentiment(article){
-  console.log("why" + article);
   var res = JSON.parse(article)["results"];
   var sentiment = res["sentimenthq"]["results"][0];
   if (sentiment >= 0.5){
@@ -112,7 +137,6 @@ function extractSentiment(article){
 function extractData(article, key, threadshold){
   var res = JSON.parse(article)["results"];
   var keywords = res[key]["results"][0];
-  console.log(keywords);
   var sortable = [];
   for (var keyword in keywords){
     sortable.push([keyword, keywords[keyword]])
@@ -121,7 +145,6 @@ function extractData(article, key, threadshold){
   var count = 0;
   for (var item in sortable){
     count += 1;
-    console.log(sortable[item][1]);
     $("#"+key).append("<td width='15px' font-style='italic'>" + sortable[item][0] + "</td>");
     if (count > threadshold){
       break;
