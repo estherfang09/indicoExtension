@@ -13,27 +13,27 @@ var tone_analyzer = watson.tone_analyzer({
   version: 'v3',
   version_date: '2016-05-19 '
 });
+var alchemy_language = watson.alchemy_language({
+  api_key: "35f59359190b72903084dbacc6df9054c9a73618"
+});
+
 
 /* GET users listing. */
 router.post('/tone', function(req, res, next) {
 
-		console.log("what is the body" + req.body.data);
-     tone_analyzer.tone({ text: req.body.data},
+  tone_analyzer.tone({ text: req.body.toString()},
+
     function(err, tone) {
-      console.log(req.body.data);
       if (err){
         console.log(err);
       }
       else{
-
         res.send(JSON.stringify(tone, null, 2));
-        //return JSON.stringify(tone, null, 2);
       }
-   
-  console.log(req);
-  
-  });
-  //res.send('respond with a resource');
+    });
 });
 
+router.post('/info', function (req,res,next)){
+  alchemy_language
+}
 module.exports = router;
